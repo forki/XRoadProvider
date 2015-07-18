@@ -1,0 +1,26 @@
+﻿module private XRoad.ErasedProducerDefinition
+
+open ProviderImplementation.ProvidedTypes
+open System.Reflection
+open XRoad.Common
+
+let baseTy = typeof<obj>
+
+let initProducerMembers (producerTy: ProvidedTypeDefinition) uri languageCode =
+    let schema = ProducerDescription.Load(resolveUri uri, languageCode)
+    let typesTy = ProvidedTypeDefinition("Types", Some baseTy, HideObjectMethods=true)
+    producerTy.AddMember(typesTy)
+    schema.Services
+    |> List.map (fun svc ->
+        let serviceTy = ProvidedTypeDefinition(svc.Name, Some baseTy, HideObjectMethods=true)
+        svc.Ports
+        |> List.map (fun prt ->
+            let portTy = ProvidedTypeDefinition(prt.Name, Some baseTy, HideObjectMethods=true)
+            let ctr = ProvidedConstructor([])
+            ctr.InvokeCode <- fun _ -> <@@ obj() @@>
+            portTy.AddMember(ctr)
+            portTy)
+        |> serviceTy.AddMembers
+        serviceTy)
+    |> producerTy.AddMembers
+    ()

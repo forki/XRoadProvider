@@ -4,6 +4,7 @@ open Microsoft.FSharp.Core.CompilerServices
 open Microsoft.FSharp.Quotations
 open ProviderImplementation.ProvidedTypes
 open System
+open System.Collections.Concurrent
 open System.Collections.Generic
 open System.IO
 open System.Reflection
@@ -138,4 +139,34 @@ type XRoadProviders() as this =
                 | _ -> failwith "Unexpected parameter values!"
                 thisTy)
 
-    do this.AddNamespace(namespaceName, [serverTy])
+    // Main type for erased infrastructure access.
+    let producerTy =
+        let typ = ProvidedTypeDefinition(theAssembly, namespaceName, "XRoadProducerE", Some baseTy)
+        typ.AddXmlDoc("Erased type provider for accessing individual methods of certain producer.")
+        typ
+
+    let cache = ConcurrentDictionary<_,_>()
+
+    do
+        let producerUriParam = ProvidedStaticParameter("ProducerUri", typeof<string>)
+        producerUriParam.AddXmlDoc("WSDL document location (either local file or network resource).")
+
+        let languageCodeParam = ProvidedStaticParameter("LanguageCode", typeof<string>, "et")
+        languageCodeParam.AddXmlDoc("Specify language code that is extracted as documentation tooltips. Default value is estonian (et).")
+
+        producerTy.DefineStaticParameters(
+            [producerUriParam; languageCodeParam],
+            fun typeName parameterValues ->
+                match parameterValues with
+                | [| :? string as uri; :? string as lang |] ->
+                    let key = (uri, lang)
+                    match cache.TryGetValue(key) with
+                    | true, v -> v
+                    | _ ->
+                        let thisTy = ProvidedTypeDefinition(theAssembly, namespaceName, typeName, Some baseTy)
+                        XRoad.ErasedProducerDefinition.initProducerMembers thisTy uri lang
+                        cache.GetOrAdd(key, thisTy)
+                | _ -> failwith "Unexpected parameter values."
+            )
+
+    do this.AddNamespace(namespaceName, [serverTy; producerTy])
