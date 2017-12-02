@@ -32,10 +32,7 @@
     <Compile Include="CodeDom.fs" />
     <Compile Include="TypeBuilderContext.fs" />
     <Compile Include="CodeDomGenerator.fs" />
-    <Compile Include="ProducerDefinition.fs" />
     <Compile Include="SecurityServer.fs" />
-    <Compile Include="XRoadProvidedTypes.fsi" />
-    <Compile Include="XRoadProvidedTypes.fs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="XRoadProvider.fsx">
