@@ -6,6 +6,7 @@ open System
 open System.IO
 open System.Collections.Concurrent
 open System.Reflection
+open XRoad
 
 /// Generated type providers for X-Road infrastructure.
 /// Currently only one type provider is available, which builds service interface for certain producer.
@@ -17,7 +18,7 @@ type XRoadProducerProvider() as this =
     let theAssembly = this.GetType().Assembly
 
     // Already generated assemblies
-    let typeCache = ConcurrentDictionary<_,_>()
+    let typeCache = ConcurrentDictionary<_, Type>()
 
     // Available parameters to use for configuring type provider instance
     let staticParameters =

@@ -1,4 +1,4 @@
-﻿module internal XRoad.ProducerDefinition
+module internal XRoad.ProducerDefinition
 
 open CodeDom
 open CodeDomGenerator

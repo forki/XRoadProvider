@@ -1,6 +1,8 @@
 namespace ProviderImplementation.ProvidedTypes
 
 open FSharp.Core.CompilerServices
+open XRoad
+open XRoad.ServiceDiscovery
 open System
 open System.Reflection
 
@@ -8,10 +10,10 @@ open System.Reflection
 /// Currently only one type provider is available, which acquires list of all producers from
 /// security server.
 [<TypeProvider>]
-type XRoadProviders(config: TypeProviderConfig) as this =
+type XRoadServerProvider(config: TypeProviderConfig) as this =
     inherit TypeProviderForNamespaces(config)
 
-    let theAssembly = typeof<XRoadProviders>.Assembly
+    let theAssembly = typeof<XRoadServerProvider>.Assembly
     let namespaceName = "XRoad.Providers"
     let baseTy = typeof<obj>
 
@@ -39,7 +41,7 @@ type XRoadProviders(config: TypeProviderConfig) as this =
                     producersTy.AddXmlDoc("List of available database names registered at the security server.")
                     thisTy.AddMember(producersTy)
                     // Add list of members which each corresponds to certain producer.
-                    SecurityServer.discoverProducers(serverIP)
+                    Legacy.discoverProducers(serverIP)
                     |> List.map (fun producer ->
                         let producerTy = ProvidedTypeDefinition(producer.Name, Some baseTy, hideObjectMethods=true)
                         producerTy.AddMember(ProvidedField.Literal("ProducerName", typeof<string>, producer.Name))
@@ -65,8 +67,8 @@ type XRoadProviders(config: TypeProviderConfig) as this =
 
         let client =
             match subsystemCode with
-            | null | "" -> SecurityServerV6.Member(xRoadInstance, memberClass, memberCode)
-            | code -> SecurityServerV6.Subsystem(xRoadInstance, memberClass, memberCode, code)
+            | null | "" -> Member(xRoadInstance, memberClass, memberCode)
+            | code -> Subsystem(xRoadInstance, memberClass, memberCode, code)
 
         let thisTy = ProvidedTypeDefinition(theAssembly, namespaceName, typeName, Some baseTy)
 
@@ -84,7 +86,7 @@ type XRoadProviders(config: TypeProviderConfig) as this =
         thisTy.AddMember(identifier)
 
         producersTy.AddMembersDelayed (fun _ ->
-            SecurityServerV6.downloadProducerList securityServerUri xRoadInstance refresh
+            downloadProducerList securityServerUri xRoadInstance refresh
             |> List.map (fun memberClass ->
                 let memberClassName = memberClass.Name
                 let classTy = ProvidedTypeDefinition(memberClass.Name, Some baseTy, hideObjectMethods = true)
@@ -94,11 +96,11 @@ type XRoadProviders(config: TypeProviderConfig) as this =
                     memberClass.Members
                     |> List.map (fun memberItem ->
                         let memberItemCode = memberItem.Code
-                        let memberId = SecurityServerV6.Member(xRoadInstance, memberClass.Name, memberItem.Code)
+                        let memberId = Member(xRoadInstance, memberClass.Name, memberItem.Code)
                         let addServices provider addNote =
                             try
-                                let service: SecurityServerV6.Service = { Provider = provider; ServiceCode = "listMethods"; ServiceVersion = None }
-                                match addNote, SecurityServerV6.downloadMethodsList securityServerUri client service with
+                                let service: Service = { Provider = provider; ServiceCode = "listMethods"; ServiceVersion = None }
+                                match addNote, downloadMethodsList securityServerUri client service with
                                 | true, [] -> [noteProperty "No services are listed in this X-Road member."]
                                 | _, ss -> ss |> List.map (fun x -> ProvidedField.Literal((sprintf "SERVICE:%s" x.ServiceCode), typeof<string>, Uri(securityServerUri, x.WsdlPath).ToString()) :> MemberInfo)
                             with e -> [noteProperty e.Message]
@@ -122,7 +124,7 @@ type XRoadProviders(config: TypeProviderConfig) as this =
                 classTy))
 
         centralServicesTy.AddMembersDelayed (fun _ ->
-            match SecurityServerV6.downloadCentralServiceList securityServerUri xRoadInstance refresh with
+            match downloadCentralServiceList securityServerUri xRoadInstance refresh with
             | [] -> [noteProperty "No central services are listed in this X-Road instance."]
             | services -> services |> List.map (fun serviceCode -> upcast ProvidedField.Literal(serviceCode, typeof<string>, serviceCode)))
 

@@ -14,7 +14,11 @@
     <Compile Include="..\..\paket-files\fsprojects\FSharp.TypeProviders.SDK\src\ProvidedTypes.fs">
       <Link>ProvidedTypes.fs</Link>
     </Compile>
+    <Compile Include="..\XRoadProvider\Commons.fs">
+      <Link>Commons.fs</Link>
+    </Compile>
     <Compile Include="ServiceDiscovery.fs" />
+    <Compile Include="ProducerDefinition.fs" />
     <Compile Include="XRoadProducerProvider.fsi" />
     <Compile Include="XRoadProducerProvider.fs" />
     <Compile Include="XRoadServerProvider.fsi" />
