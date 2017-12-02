@@ -17,3 +17,4 @@ GITHUB
       Octokit (>= 0.20)
   remote: fsprojects/FSharp.TypeProviders.SDK
     src/ProvidedTypes.fs (33fd1c0a95dd1ddfe77f12e4921b6983f72c8e62)
+    src/ProvidedTypes.fsi (33fd1c0a95dd1ddfe77f12e4921b6983f72c8e62)

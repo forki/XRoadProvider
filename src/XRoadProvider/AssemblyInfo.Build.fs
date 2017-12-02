@@ -9,7 +9,7 @@ open Microsoft.FSharp.Core.CompilerServices
 #if DEBUG
 [<assembly: InternalsVisibleTo("XRoadProvider.Tests")>]
 #else
-[<assembly: TypeProviderAssembly>]
+[<assembly: TypeProviderAssembly("XRoadProvider.DesignTime.dll")>]
 #endif
 
 do ()
