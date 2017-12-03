@@ -1,17 +1,38 @@
-﻿module internal XRoad.Emitter
+module XRoadProvider.Runtime.Emitter
 
+open EmitterDsl
+open Protocol
 open Quotations.Patterns
 open System
+open System.Collections.Generic
 open System.Collections.Concurrent
 open System.Numerics
 open System.Reflection
 open System.Reflection.Emit
 open System.Xml
 open System.Xml.Linq
-open XRoad
-open XRoad.Serialization.Attributes
-open EmitterDsl
 open XmlExtensions
+open XRoadProvider.Runtime.Attributes
+
+type DeserializerDelegate = delegate of XmlReader * SerializerContext -> obj
+type SerializerDelegate = delegate of XmlWriter * obj * SerializerContext -> unit
+type OperationSerializerDelegate = delegate of XmlWriter * obj[] * SerializerContext -> unit
+
+type MethodPartMap =
+    { IsEncoded: bool
+      IsMultipart: bool
+      Accessor: XmlQualifiedName option }
+
+type MethodMap =
+    { Deserializer: DeserializerDelegate
+      Serializer: OperationSerializerDelegate
+      Protocol: XRoadProtocol
+      Request: MethodPartMap
+      Response: MethodPartMap
+      ServiceCode: string
+      ServiceVersion: string option
+      Namespaces: string list
+      RequiredHeaders: IDictionary<string, string[]> }
 
 type Serialization =
     { Root: MethodInfo

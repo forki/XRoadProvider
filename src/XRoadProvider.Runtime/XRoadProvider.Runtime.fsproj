@@ -3,7 +3,23 @@
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <DebugType Condition="'$(TargetFramework)' == 'net461'">full</DebugType>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' == 'Unix' And '$(TargetFramework)' == 'net461'">
+    <FrameworkPathOverride>/usr/lib/mono/4.6.1-api</FrameworkPathOverride>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
+    <PackageReference Include="NodaTime" Version="2.2.3" />
+    <PackageReference Include="Optional" Version="3.2.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes.fs" />
+    <Compile Include="EmitterDsl.fs" />
+    <Compile Include="Protocol.fs" />
+    <Compile Include="XmlExtensions.fs" />
+    <Compile Include="Emitter.fs" />
+    <Compile Include="Serialization.fs" />
   </ItemGroup>
 </Project>

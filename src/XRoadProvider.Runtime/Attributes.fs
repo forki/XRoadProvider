@@ -1,4 +1,4 @@
-﻿namespace XRoad.Serialization.Attributes
+namespace XRoadProvider.Runtime.Attributes
 
 open System
 

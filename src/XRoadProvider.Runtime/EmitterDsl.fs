@@ -1,4 +1,4 @@
-module internal XRoad.EmitterDsl
+module internal XRoadProvider.Runtime.EmitterDsl
 
 open Quotations.Patterns
 open System
