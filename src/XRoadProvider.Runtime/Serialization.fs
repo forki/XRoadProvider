@@ -31,7 +31,7 @@ module private Response =
                 else false
             isElement() || findElement()
 
-module internal MultipartMessage =
+module MultipartMessage =
     open System.Net
     open System.Text
 
@@ -141,7 +141,7 @@ module internal MultipartMessage =
         if buffer |> isNull || value |> isNull || value.Length > buffer.Length then false
         else compare (value.Length - 1)
 
-    let internal read (response: WebResponse) : Stream * BinaryContent list =
+    let read (response: WebResponse) : Stream * BinaryContent list =
         match response |> getBoundaryMarker with
         | Some(boundaryMarker) ->
             use stream = new PeekStream(response.GetResponseStream())

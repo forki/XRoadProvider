@@ -5,7 +5,8 @@ open System.Collections.Generic
 open System.IO
 open System.Xml
 open System.Xml.Linq
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime.Attributes
+open XRoadProvider.Runtime.Protocol
 
 module MyOption =
     let defaultValue d o = o |> Option.fold (fun _ x -> x) d

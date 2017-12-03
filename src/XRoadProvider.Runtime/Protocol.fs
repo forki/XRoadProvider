@@ -11,7 +11,7 @@ module MyOption =
     let defaultWith f o = match o with Some(o) -> o | None -> f()
 
 [<RequireQualifiedAccessAttribute>]
-module internal XmlNamespace =
+module XmlNamespace =
     let [<Literal>] Http = "http://schemas.xmlsoap.org/soap/http"
     let [<Literal>] Mime = "http://schemas.xmlsoap.org/wsdl/mime/"
     let [<Literal>] Soap = "http://schemas.xmlsoap.org/wsdl/soap/"

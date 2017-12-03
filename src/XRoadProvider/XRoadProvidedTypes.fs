@@ -7,6 +7,7 @@ open System.Collections.Generic
 open System.IO
 open System.Reflection
 open XRoad
+open XRoadProvider.Runtime.Protocol
 
 /// Generated type providers for X-Road infrastructure.
 /// Currently only one type provider is available, which builds service interface for certain producer.

@@ -8,7 +8,8 @@ open System.Xml
 open System.Xml.Linq
 open TypeSchema
 open Wsdl
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime.Attributes
+open XRoadProvider.Runtime.Protocol
 
 /// Functions and types to handle type building process.
 module TypeBuilder =

@@ -9,6 +9,8 @@ open System.Text
 open System.Xml
 open System.Xml.Linq
 open Wsdl
+open XRoadProvider.Runtime
+open XRoadProvider.Runtime.Protocol
 
 module internal SecurityServer =
     /// Represents single producer information acquired from security server.

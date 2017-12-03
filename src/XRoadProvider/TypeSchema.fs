@@ -5,6 +5,7 @@ open System.Collections.Generic
 open System.Globalization
 open System.Xml.Linq
 open Wsdl
+open XRoadProvider.Runtime.Protocol
 
 /// Extract numberical bound limits from current element.
 let readBoundsValue name node =

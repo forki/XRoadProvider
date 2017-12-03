@@ -2,6 +2,7 @@
 
 open System.Xml.Linq
 open Wsdl
+open XRoadProvider.Runtime.Protocol
 
 /// Temporary type for SOAP:body binding elements.
 type private SoapBody =

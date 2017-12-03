@@ -7,7 +7,9 @@ open System.CodeDom
 open System.Collections.Generic
 open System.Reflection
 open System.Xml
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime
+open XRoadProvider.Runtime.Attributes
+open XRoadProvider.Runtime.Protocol
 open TypeSchema
 open Wsdl
 
@@ -173,7 +175,7 @@ module ServiceBuilder =
                     (Stmt.declVarOf ctr "__result"
                         (Expr.cast
                             ctr
-                            ((Expr.typeRefOf<XRoad.XRoadUtil> @-> "MakeServiceCall")
+                            ((Expr.typeRefOf<XRoadUtil> @-> "MakeServiceCall")
                                 @% [(Expr.this @-> "GetType") @% []
                                     !^ operation.Name
                                     Expr.this @=> "ProducerUri"
@@ -189,7 +191,7 @@ module ServiceBuilder =
                     (Stmt.ret
                         (Expr.cast
                             (elementType.AsCodeTypeReference())
-                            ((Expr.typeRefOf<XRoad.XRoadUtil> @-> "MakeServiceCall")
+                            ((Expr.typeRefOf<XRoadUtil> @-> "MakeServiceCall")
                                 @% [(Expr.this @-> "GetType") @% []
                                     !^ operation.Name
                                     Expr.this @=> "ProducerUri"

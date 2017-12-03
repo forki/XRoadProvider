@@ -7,7 +7,8 @@ open System.Collections.Generic
 open System.Reflection
 open System.Text.RegularExpressions
 open System.Xml.Linq
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime.Attributes
+open XRoadProvider.Runtime.Protocol
 open TypeSchema
 open Wsdl
 

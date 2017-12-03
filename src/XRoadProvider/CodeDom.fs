@@ -8,8 +8,8 @@ open System.CodeDom.Compiler
 open System.Diagnostics
 open System.Globalization
 open System.IO
-
 open TypeSchema
+open XRoadProvider.Runtime.Protocol
 
 /// Get type reference from generic argument.
 let typeRef<'T> = CodeTypeReference(typeof<'T>)
@@ -59,7 +59,8 @@ module Attributes =
     open System.Xml.Linq
     open System.Xml.Schema
     open System.Xml.Serialization
-    open XRoad.Serialization.Attributes
+    open XRoadProvider.Runtime.Attributes
+    open XRoadProvider.Runtime.Protocol
 
     let private addUnqualifiedForm a = a |> Attr.addNamedArg "Form" (Expr.enumValue<XmlSchemaForm> "Unqualified")
 
@@ -240,6 +241,8 @@ module Arr =
     let first arr = CodeArrayIndexerExpression(arr, !^ 0)
 
 module Compiler =
+    open XRoadProvider.Runtime.Protocol
+
     /// Builds new assembly for provided namespace.
     let buildAssembly codeNamespace =
         let codeCompileUnit = CodeCompileUnit()
