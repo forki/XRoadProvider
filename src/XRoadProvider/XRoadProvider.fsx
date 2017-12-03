@@ -6,6 +6,7 @@
 #r "Optional"
 #r "System.Xml.Linq"
 #r "XRoadProvider"
+#r "XRoadProvider.Runtime"
 
 let (!?) = System.Nullable<'T>
 
