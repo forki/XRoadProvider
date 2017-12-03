@@ -5,7 +5,9 @@ open Microsoft.FSharp.Core.CompilerServices
 open NodaTime
 open System.Numerics
 open XRoad
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime
+open XRoadProvider.Runtime.Attributes
+open XRoadProvider.Runtime.Protocol
 
 module DefinedTypes =
     [<XRoadType>]
@@ -162,7 +164,7 @@ module DefinedTypes =
         member val fault = Optional.Option.None<faultType>() with get, set
 
 type AdsAadrMuudatusedService () =
-    [<XRoadOperation("ADSaadrmuudatused", "v4", XRoad.Serialization.Attributes.XRoadProtocol.Version40, ProtocolVersion="4.0")>]
+    [<XRoadOperation("ADSaadrmuudatused", "v4", XRoadProtocol.Version40, ProtocolVersion="4.0")>]
     [<TypeProviderXmlDoc("Aadressi muudatuste päring")>]
     [<XRoadRequiredHeaders("http://x-road.eu/xsd/xroad.xsd", "protocolVersion", "issue", "userId", "id", "service", "client")>]
     [<XRoadRequest("ADSaadrmuudatused", "http://www.maaamet.ee")>]

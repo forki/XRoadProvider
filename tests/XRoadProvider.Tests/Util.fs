@@ -1,5 +1,8 @@
 namespace XRoadProvider.Tests
 
+open XRoadProvider.Runtime.Protocol
+open XRoadProvider.Runtime.Emitter
+
 module SoapUtil =
     open XRoad
 
@@ -18,7 +21,6 @@ module SerializationUtil =
     open System.Text
     open System.Xml
     open XRoad
-    open XRoad.Emitter
 
     let deserialize (serviceType: Type) context (nm: string) (xml: string) =
         let map = serviceType.GetMethod(nm) |> getMethodMap

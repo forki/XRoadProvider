@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\XRoadProvider\XRoadProvider.fsproj" />
+    <ProjectReference Include="..\..\src\XRoadProvider.Runtime\XRoadProvider.Runtime.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Expecto" Version="5.0.1" />

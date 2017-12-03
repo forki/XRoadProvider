@@ -9,8 +9,9 @@ open System.Threading
 open System.Xml
 open System.Xml.Linq
 open XRoad
-open XRoad.Emitter
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime.Attributes
+open XRoadProvider.Runtime.Emitter
+open XRoadProvider.Runtime.Protocol
 open XRoadProvider.Tests.SoapUtil
 
 let [<Literal>] producerName = "producer"

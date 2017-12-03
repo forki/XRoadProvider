@@ -7,9 +7,10 @@ open System.Reflection.Emit
 open System.Xml
 open System.Xml.Linq
 open XRoad
-open XRoad.Emitter
-open XRoad.Emitter.EmitSerialization
-open XRoad.Serialization.Attributes
+open XRoadProvider.Runtime.Protocol
+open XRoadProvider.Runtime.Emitter
+open XRoadProvider.Runtime.Emitter.EmitSerialization
+open XRoadProvider.Runtime.Attributes
 
 [<XRoadType>]
 type HasOptionalElements () =

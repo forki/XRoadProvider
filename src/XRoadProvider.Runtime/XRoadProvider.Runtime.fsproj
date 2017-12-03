@@ -15,6 +15,7 @@
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.Debug.fs" />
     <Compile Include="Attributes.fs" />
     <Compile Include="EmitterDsl.fs" />
     <Compile Include="Protocol.fs" />
