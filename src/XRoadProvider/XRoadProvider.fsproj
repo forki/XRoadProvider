@@ -6,6 +6,7 @@
     <TargetFramework>net461</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>$(NoWarn);2003</NoWarn>
+    <DebugType Condition="'$(TargetFramework)' == 'net461'">full</DebugType>
     <DefineConstants>$(DefineConstants)</DefineConstants>
     <DocumentationFile>bin\Debug\net461\XRoadProvider.xml</DocumentationFile>
   </PropertyGroup>
@@ -45,5 +46,8 @@
     <None Include="XRoadProvider.fsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XRoadProvider.Runtime\XRoadProvider.Runtime.fsproj" />
   </ItemGroup>
 </Project>
